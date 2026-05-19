@@ -1,0 +1,505 @@
+ADD SEQUENCE "NextCustNum"
+  INITIAL 1000
+  INCREMENT 5
+  CYCLE-ON-LIMIT no
+  MIN-VAL 1000
+
+ADD SEQUENCE "NextInvNum"
+  INITIAL 1000
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 1000
+
+ADD SEQUENCE "NextOrdNum"
+  INITIAL 1000
+  INCREMENT 5
+  CYCLE-ON-LIMIT no
+  MIN-VAL 1000
+
+ADD SEQUENCE "NextItemNum"
+  INITIAL 100
+  INCREMENT 10
+  CYCLE-ON-LIMIT no
+  MIN-VAL 100
+
+ADD SEQUENCE "NextRefNum"
+  INITIAL 1
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 1
+
+ADD SEQUENCE "NextVisitor"
+  INITIAL 1000
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 1000
+
+ADD SEQUENCE "NextSupplNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextLocalDefNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextWareNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextBinNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextPONum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextEmpNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD SEQUENCE "NextInvTransNum"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+  MIN-VAL 0
+
+ADD TABLE "Benefits"
+  AREA "Employee"
+  DESCRIPTION "The benefits table contains employee benefits."
+  DUMP-NAME "benefits"
+
+ADD FIELD "EmpNum" OF "Benefits" AS integer 
+  FORMAT "zzzzzzzzz9"
+  INITIAL "0"
+  LABEL "Emp No"
+  POSITION 2
+  MAX-WIDTH 4
+  VALEXP "CAN-FIND(employee OF benefits)"
+  VALMSG "Employee must exist."
+  HELP "Please enter the Emp Number"
+  ORDER 10
+
+ADD FIELD "HealthCare" OF "Benefits" AS character 
+  FORMAT "x(8)"
+  INITIAL ""
+  LABEL "Health Care"
+  POSITION 3
+  MAX-WIDTH 16
+  HELP "Please enter the Health Care field."
+  LENGTH 0
+  ORDER 20
+
+ADD FIELD "LifeInsurance" OF "Benefits" AS integer 
+  FORMAT "$>>,>>>,>>>"
+  INITIAL "0"
+  LABEL "Life Insurance"
+  POSITION 4
+  MAX-WIDTH 4
+  HELP "Please enter the Life Insurance field."
+  ORDER 30
+
+ADD FIELD "Pension401K" OF "Benefits" AS integer 
+  FORMAT ">>,>>9"
+  INITIAL "0"
+  LABEL "Pension401K"
+  POSITION 5
+  MAX-WIDTH 4
+  HELP "Please enter the 401K field."
+  ORDER 40
+
+ADD FIELD "StockPurchase" OF "Benefits" AS integer 
+  FORMAT ">>,>>9"
+  INITIAL "0"
+  LABEL "Stock Purchase"
+  POSITION 6
+  MAX-WIDTH 4
+  HELP "Please enter the Stock Purchase field."
+  ORDER 50
+
+ADD FIELD "MedicalSpending" OF "Benefits" AS integer 
+  FORMAT ">>,>>9"
+  INITIAL "0"
+  LABEL "Medical Spending"
+  POSITION 7
+  MAX-WIDTH 4
+  HELP "Please enter the Medical Spending field."
+  ORDER 60
+
+ADD FIELD "DependentCare" OF "Benefits" AS integer 
+  FORMAT ">>,>>9"
+  INITIAL "0"
+  LABEL "Dependent Care"
+  POSITION 8
+  MAX-WIDTH 4
+  HELP "Please enter the dependent care field."
+  ORDER 70
+
+ADD INDEX "EmpNo" ON "Benefits" 
+  AREA "Employee"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "EmpNum" ASCENDING 
+
+ADD TABLE "BillTo"
+  AREA "Order"
+  DESCRIPTION "The billto table contains bill to address information for an order. "
+  DUMP-NAME "billto"
+
+ADD FIELD "CustNum" OF "BillTo" AS integer 
+  FORMAT ">>>>9"
+  INITIAL "0"
+  LABEL "Cust Num"
+  POSITION 2
+  MAX-WIDTH 4
+  VALEXP "CAN-FIND(customer OF billto)"
+  VALMSG "Customer number must be greater than zero"
+  HELP "Please enter the customer number."
+  ORDER 10
+
+ADD FIELD "BillToID" OF "BillTo" AS integer 
+  FORMAT "zzzzzzzzz9"
+  INITIAL "0"
+  LABEL "BillToID"
+  POSITION 3
+  MAX-WIDTH 4
+  HELP "Please enter the BillTo ID"
+  ORDER 20
+
+ADD FIELD "Name" OF "BillTo" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Name"
+  POSITION 4
+  MAX-WIDTH 60
+  HELP "Please enter the name."
+  ORDER 30
+
+ADD FIELD "Address" OF "BillTo" AS character 
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address"
+  POSITION 5
+  MAX-WIDTH 70
+  HELP "Please enter the address."
+  ORDER 40
+
+ADD FIELD "Address2" OF "BillTo" AS character 
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address2"
+  POSITION 6
+  MAX-WIDTH 70
+  HELP "Please enter the address2."
+  ORDER 50
+
+ADD FIELD "City" OF "BillTo" AS character 
+  FORMAT "x(25)"
+  INITIAL ""
+  LABEL "City"
+  POSITION 7
+  MAX-WIDTH 50
+  HELP "Please enter the city"
+  ORDER 60
+
+ADD FIELD "State" OF "BillTo" AS character 
+  DESCRIPTION "Label/Valexp/Valmsg/Help are set based on value of NON-US field!"
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "State"
+  POSITION 8
+  MAX-WIDTH 40
+  HELP "Please enter standard state abbreviation."
+  ORDER 70
+
+ADD FIELD "PostalCode" OF "BillTo" AS character 
+  DESCRIPTION "Format/Label/Help Message based on status of NON-US field."
+  FORMAT "x(10)"
+  INITIAL ""
+  LABEL "Postal Code"
+  POSITION 9
+  MAX-WIDTH 20
+  HELP "Please enter the appropriate postal code."
+  ORDER 80
+
+ADD FIELD "Contact" OF "BillTo" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Contact"
+  POSITION 10
+  MAX-WIDTH 60
+  HELP "Please enter the contact."
+  ORDER 90
+
+ADD FIELD "Phone" OF "BillTo" AS character 
+  DESCRIPTION "Format/Label/Help based on status of NON-US field."
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "Phone"
+  POSITION 11
+  MAX-WIDTH 40
+  HELP "Please enter the phone number."
+  ORDER 100
+
+ADD INDEX "custnumbillto" ON "BillTo" 
+  AREA "Order"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "CustNum" ASCENDING 
+  INDEX-FIELD "BillToID" ASCENDING 
+
+ADD TABLE "Bin"
+  AREA "Inventory"
+  DESCRIPTION "The bin table is used to represent the bins in each warehouse that contain items."
+  DUMP-NAME "bin"
+  TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crbin.p" CRC "60448" 
+
+ADD FIELD "WarehouseNum" OF "Bin" AS integer 
+  FORMAT "zzzzzzzzz9"
+  INITIAL "0"
+  LABEL "Warehouse Num"
+  POSITION 2
+  MAX-WIDTH 4
+  VALEXP "CAN-FIND(warehouse OF bin)"
+  VALMSG "Warehouse must exist."
+  HELP "Please Enter the Warehouse Number."
+  ORDER 10
+
+ADD FIELD "Itemnum" OF "Bin" AS integer 
+  FORMAT "zzzzzzzzz9"
+  INITIAL "0"
+  LABEL "Item Num"
+  POSITION 3
+  MAX-WIDTH 4
+  VALEXP "CAN-FIND(item OF bin)"
+  VALMSG "Item must be on file"
+  HELP "Please enter an item number."
+  ORDER 20
+
+ADD FIELD "Qty" OF "Bin" AS integer 
+  FORMAT "->>>>9"
+  INITIAL "0"
+  LABEL "Qty"
+  POSITION 4
+  MAX-WIDTH 4
+  HELP "Please enter a quantity."
+  ORDER 30
+
+ADD FIELD "BinNum" OF "Bin" AS integer 
+  FORMAT "zzzzzzzzz9"
+  INITIAL "0"
+  LABEL "Bin Num"
+  POSITION 5
+  MAX-WIDTH 4
+  HELP "Please enter a bin number"
+  ORDER 40
+
+ADD FIELD "BinName" OF "Bin" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Bin Name"
+  POSITION 6
+  MAX-WIDTH 60
+  HELP "Please enter a bin name"
+  ORDER 50
+
+ADD INDEX "BinNum" ON "Bin" 
+  AREA "Inventory"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "BinNum" ASCENDING 
+
+ADD INDEX "ItemNum" ON "Bin" 
+  AREA "Inventory"
+  INDEX-FIELD "Itemnum" ASCENDING 
+
+ADD INDEX "WarehouseNumItemNum" ON "Bin" 
+  AREA "Inventory"
+  INDEX-FIELD "WarehouseNum" ASCENDING 
+  INDEX-FIELD "Itemnum" ASCENDING 
+
+ADD TABLE "Customer"
+  AREA "Cust_Data"
+  DESCRIPTION "The customer table contains customer  information including  balance and address."
+  DUMP-NAME "customer"
+  TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crcust.p" CRC "?" 
+  TABLE-TRIGGER "DELETE" NO-OVERRIDE PROCEDURE "sports2000trgs/delcust.p" CRC "?" 
+
+ADD FIELD "CustNum" OF "Customer" AS integer 
+  FORMAT ">>>>9"
+  INITIAL "0"
+  LABEL "Cust Num"
+  POSITION 2
+  MAX-WIDTH 4
+  VALEXP "custnum > 0"
+  VALMSG "Customer number must be greater than zero"
+  HELP "Please enter a customer number."
+  ORDER 10
+
+ADD FIELD "Name" OF "Customer" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Name"
+  POSITION 3
+  MAX-WIDTH 60
+  HELP "Please enter a name."
+  ORDER 30
+
+ADD FIELD "Address" OF "Customer" AS character 
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address"
+  POSITION 4
+  MAX-WIDTH 70
+  HELP "Please enter an address."
+  ORDER 40
+
+ADD FIELD "Address2" OF "Customer" AS character 
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address2"
+  POSITION 5
+  MAX-WIDTH 70
+  HELP "Please enter an address."
+  ORDER 50
+
+ADD FIELD "City" OF "Customer" AS character 
+  FORMAT "x(25)"
+  INITIAL ""
+  LABEL "City"
+  POSITION 6
+  MAX-WIDTH 50
+  HELP "Please enter a city."
+  ORDER 60
+
+ADD FIELD "State" OF "Customer" AS character 
+  DESCRIPTION "Label/Valexp/Valmsg/Help are set based on value of NON-US field!"
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "State"
+  POSITION 7
+  MAX-WIDTH 40
+  HELP "Please enter standard state abbreviation."
+  ORDER 70
+
+ADD FIELD "Country" OF "Customer" AS character 
+  FORMAT "x(20)"
+  INITIAL "USA"
+  LABEL "Country"
+  POSITION 8
+  MAX-WIDTH 40
+  HELP "Please enter a country."
+  ORDER 15
+
+ADD FIELD "Phone" OF "Customer" AS character 
+  DESCRIPTION "Format/Label/Help based on status of NON-US field."
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "Phone"
+  POSITION 9
+  MAX-WIDTH 40
+  HELP "Please enter a phone number"
+  ORDER 115
+
+ADD FIELD "Contact" OF "Customer" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Contact"
+  POSITION 10
+  MAX-WIDTH 60
+  HELP "Please enter a contact."
+  ORDER 110
+
+ADD FIELD "SalesRep" OF "Customer" AS character 
+  FORMAT "x(4)"
+  INITIAL ""
+  LABEL "Sales Rep"
+  POSITION 11
+  MAX-WIDTH 8
+  VALEXP "CAN-FIND(Salesrep OF Customer)"
+  VALMSG "The Sales Rep's name you've entered must exist in the Salesrep table."
+  HELP "Please Enter a Sales Rep."
+  ORDER 125
+
+ADD FIELD "Comments" OF "Customer" AS character 
+  FORMAT "x(80)"
+  INITIAL ""
+  LABEL "Comments"
+  POSITION 12
+  MAX-WIDTH 160
+  HELP "Please enter comments."
+  ORDER 180
+
+ADD FIELD "CreditLimit" OF "Customer" AS decimal 
+  DESCRIPTION "Maximum credit"
+  FORMAT "->,>>>,>>9"
+  INITIAL "1500"
+  LABEL "Credit Limit"
+  POSITION 13
+  MAX-WIDTH 17
+  VALEXP "CreditLimit >= 0 AND CreditLimit <= 9999999"
+  VALMSG "Credit Limit must be >= 0 and <= 9,999,999"
+  HELP "Please enter a Credit Limit."
+  DECIMALS 2
+  ORDER 130
+
+ADD FIELD "Balance" OF "Customer" AS decimal 
+  FORMAT "->,>>>,>>9.99"
+  INITIAL "0"
+  LABEL "Balance"
+  POSITION 14
+  MAX-WIDTH 17
+  HELP "Please enter a balance."
+  DECIMALS 2
+  ORDER 140
+
+ADD FIELD "Terms" OF "Customer" AS character 
+  FORMAT "x(20)"
+  INITIAL "Net30"
+  LABEL "Terms"
+  POSITION 15
+  MAX-WIDTH 40
+  HELP "Please enter terms"
+  ORDER 150
+
+ADD FIELD "Discount" OF "Customer" AS integer 
+  FORMAT ">>9%"
+  INITIAL "0"
+  LABEL "Discount"
+  POSITION 16
+  MAX-WIDTH 4
+  VALEXP "Discount >= 0"
+  VALMSG "Discount must be greater or equal to 0"
+  HELP "Please enter a percentage from 0 to 100."
+  ORDER 170
+
+ADD FIELD "PostalCode" OF "Customer" AS character 
+  DESCRIPTION "Format/Label/Help Message based on status of NON-US field."
+  FORMAT "x(10)"
+  INITIAL ""
+  LABEL "Postal Code"
+  POSITION 17
+  MAX-WIDTH 20
+  HELP "Please enter the appropriate Postal Code."
+  ORDER 80
+
+ADD FIELD "Fax" OF "Customer" AS character 
+  DESCRIPTION "Format/Label/Help based on status of NON-US field."
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "Fax"
+  POSITION 18
+  MAX-WIDTH 40
+  ORDER 120
